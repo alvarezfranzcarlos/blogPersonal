@@ -30,7 +30,7 @@ Route::get('post/{id}', function ($id) {
             'content'=> 'Contenido agregado opcional'
         ];
     }
-    return view('blog.post', ['post' => $post]);
+    return view('blog.post', ['post' =>$post]);
 })->name('blog.post');
 
 Route::get('about', function () {
@@ -51,7 +51,19 @@ Route::post('create', function () {
 })->name('admin.create');
 
 Route::get('edit/{id}', function ($id) {
-    return view('admin.edit');
+    if($id==1){
+        $post=[
+            'title'=> 'Titulo agregado',
+            'content'=> 'Contenido agregado'
+        ];
+    } else
+    {
+        $post=[
+            'title'=> 'Titulo agregado opcional',
+            'content'=> 'Contenido agregado opcional'
+        ];
+    }
+    return view('admin.edit', ['post' =>$post]);
 })->name('admin.edit');
 
 Route::post('edit', function () {
