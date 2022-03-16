@@ -28,6 +28,8 @@
                 </div>
 
                 <input type="hidden" name="id">
+
+                {{ csrf_field() }}
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
