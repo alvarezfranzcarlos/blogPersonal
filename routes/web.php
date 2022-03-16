@@ -25,14 +25,28 @@ Route::get('about', function () {
     return view('other.about');
 })->name('other.about');
 
-Route::get('admin', function () {
+Route::group(['prefix' => 'admin'], function (){
+
+
+
+Route::get('', function () {
     return view('admin.index');
 })->name('admin.index');
 
-Route::get('admin/create', function () {
+Route::get('create', function () {
     return view('admin.create');
 })->name('admin.create');
 
-Route::get('admin/edit', function () {
+Route::post('create', function () {
+    return "Esta funcionando";
+})->name('admin.create');
+
+Route::get('edit', function () {
     return view('admin.edit');
 })->name('admin.edit');
+
+Route::post('edit', function () {
+    return "Esta funcionando";
+})->name('admin.update');
+
+});
