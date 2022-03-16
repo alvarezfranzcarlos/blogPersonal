@@ -17,8 +17,20 @@ Route::get('/', function () {
     return view('blog.index');
 })->name('blog.index');
 
-Route::get('post/{id}', function () {
-    return view('blog.post');
+Route::get('post/{id}', function ($id) {
+    if($id==1){
+        $post=[
+            'title'=> 'Titulo agregado',
+            'content'=> 'Contenido agregado'
+        ];
+    } else
+    {
+        $post=[
+            'title'=> 'Titulo agregado opcional',
+            'content'=> 'Contenido agregado opcional'
+        ];
+    }
+    return view('blog.post', ['post' => $post]);
 })->name('blog.post');
 
 Route::get('about', function () {
@@ -26,9 +38,6 @@ Route::get('about', function () {
 })->name('other.about');
 
 Route::group(['prefix' => 'admin'], function (){
-
-
-
 Route::get('', function () {
     return view('admin.index');
 })->name('admin.index');
@@ -41,7 +50,7 @@ Route::post('create', function () {
     return "Esta funcionando";
 })->name('admin.create');
 
-Route::get('edit', function () {
+Route::get('edit/{id}', function ($id) {
     return view('admin.edit');
 })->name('admin.edit');
 
