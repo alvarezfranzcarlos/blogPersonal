@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('blog.index');
-})->name('blog.index');
+Route::get('/',[PostController::class,'getIndex'])->name('blog.index');
 
 Route::get('post/{id}', function ($id) {
     if($id==1){
