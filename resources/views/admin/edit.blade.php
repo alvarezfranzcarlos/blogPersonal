@@ -30,6 +30,7 @@
                 <input type="hidden" name="id">
 
                 {{ csrf_field() }}
+                <input type="hidden" name="id" value="{{ $postId }}">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

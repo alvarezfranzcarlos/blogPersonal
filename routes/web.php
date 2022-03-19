@@ -15,77 +15,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[PostController::class,'getIndex'])->name('blog.index');
 
-Route::get('post/{id}', function ($id) {
-    if($id==1){
-        $post=[
-            'title'=> 'Titulo agregado',
-            'content'=> 'Contenido agregado'
-        ];
-    } else
-    {
-        $post=[
-            'title'=> 'Titulo agregado opcional',
-            'content'=> 'Contenido agregado opcional'
-        ];
-    }
-    return view('blog.post', ['post' =>$post]);
-})->name('blog.post');
+Route::get('post/{id}',[PostController::class,'getPost'])->name('blog.post');
 
 Route::get('about', function () {
     return view('other.about');
 })->name('other.about');
 
 Route::group(['prefix' => 'admin'], function (){
-Route::get('', function () {
-    return view('admin.index');
-})->name('admin.index');
 
-Route::get('create', function () {
-    return view('admin.create');
-})->name('admin.create');
+    Route::get('',[PostController::class,'getAdminIndex'])->name('admin.index');
 
-Route::post('create', function (\Illuminate\Http\Request $request, 	\Illuminate\Validation\Factory $validator) {
-    $validation=$validator->make($request->all()
-    ,[
-        'title'=>'required|min:5',
-        'content'=>'required|min:10'
-    ]);
-    if ($validation->fails()){
-        return redirect()->back()->withErrors($validation);
-    }
-    return redirect()
-    ->route('admin.index')
-    ->with('info','Posteo creado, nuevo titulo creado: ' . $request ->input('title'));
-})->name('admin.create');
+    Route::get('create',[PostController::class,'getAdminCreate'])->name('admin.create');
 
-Route::get('edit/{id}', function ($id) {
-    if($id==1){
-        $post=[
-            'title'=> 'Titulo agregado',
-            'content'=> 'Contenido agregado'
-        ];
-    } else
-    {
-        $post=[
-            'title'=> 'Titulo agregado opcional',
-            'content'=> 'Contenido agregado opcional'
-        ];
-    }
-    return view('admin.edit', ['post' =>$post]);
-})->name('admin.edit');
+    Route::post('create',[PostController::class,'postAdminCreate'])->name('admin.create');
 
-Route::post('edit', function (\Illuminate\Http\Request $request, \Illuminate\Validation\Factory $validator) {
-    $validation=$validator->make($request->all()
-    ,[
-        'title'=>'required|min:5',
-        'content'=>'required|min:10'
-    ]);
-    if ($validation->fails()){
-        return redirect()->back->withErrors($validation);
-    }
-    return redirect()
-    ->route('admin.index')
-    ->with('info','Posteo editado, nuevo titulo editado: ' . $request ->input('title'));
-})->name('admin.update');
+    Route::get('edit/{id}',[PostController::class,'getAdminEdit'])->name('admin.edit');
+
+    Route::post('edit',[PostController::class,'postAdminUpdate'])->name('admin.update');
 
 });
