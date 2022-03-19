@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 
 @section('content')
+@if(count($errors->all()))
+    <div class="alert alert-danger" role="alert">
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+  </div>
+@endif
+
 @include('partials.errors')
 
     <div class="row">

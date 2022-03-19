@@ -46,7 +46,15 @@ Route::get('create', function () {
     return view('admin.create');
 })->name('admin.create');
 
-Route::post('create', function (\Illuminate\Http\Request $request) {
+Route::post('create', function (\Illuminate\Http\Request $request, 	\Illuminate\Validation\Factory $validator) {
+    $validation=$validator->make($request->all()
+    ,[
+        'title'=>'required|min:5',
+        'content'=>'required|min:10'
+    ]);
+    if ($validation->fails()){
+        return redirect()->back()->withErrors($validation);
+    }
     return redirect()
     ->route('admin.index')
     ->with('info','Posteo creado, nuevo titulo creado: ' . $request ->input('title'));
@@ -68,7 +76,15 @@ Route::get('edit/{id}', function ($id) {
     return view('admin.edit', ['post' =>$post]);
 })->name('admin.edit');
 
-Route::post('edit', function (\Illuminate\Http\Request $request) {
+Route::post('edit', function (\Illuminate\Http\Request $request, \Illuminate\Validation\Factory $validator) {
+    $validation=$validator->make($request->all()
+    ,[
+        'title'=>'required|min:5',
+        'content'=>'required|min:10'
+    ]);
+    if ($validation->fails()){
+        return redirect()->back->withErrors($validation);
+    }
     return redirect()
     ->route('admin.index')
     ->with('info','Posteo editado, nuevo titulo editado: ' . $request ->input('title'));
