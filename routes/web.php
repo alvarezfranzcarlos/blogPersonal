@@ -47,7 +47,9 @@ Route::get('create', function () {
 })->name('admin.create');
 
 Route::post('create', function (\Illuminate\Http\Request $request) {
-    return "Esta funcionando";
+    return redirect()
+    ->route('admin.index')
+    ->with('info','Posteo creado, nuevo titulo creado: ' . $request ->input('title'));
 })->name('admin.create');
 
 Route::get('edit/{id}', function ($id) {
@@ -66,8 +68,10 @@ Route::get('edit/{id}', function ($id) {
     return view('admin.edit', ['post' =>$post]);
 })->name('admin.edit');
 
-Route::post('edit', function (\Illuminate\Http\Request $reques) {
-    return "Esta funcionando";
+Route::post('edit', function (\Illuminate\Http\Request $request) {
+    return redirect()
+    ->route('admin.index')
+    ->with('info','Posteo editado, nuevo titulo editado: ' . $request ->input('title'));
 })->name('admin.update');
 
 });
