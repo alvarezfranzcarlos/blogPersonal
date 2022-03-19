@@ -3,9 +3,9 @@ namespace App;
 
 class Post {
 
-    public function getPost($session){
-        if(!session->has('post')){
-            this->createDummyData($session);
+    public function getPosts($session){
+        if(!$session->has('post')){
+            $this->createDummyData($session);
         }
         return $session->get('posts');
     }
