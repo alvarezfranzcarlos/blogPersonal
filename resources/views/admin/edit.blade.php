@@ -29,6 +29,13 @@
 
                 <input type="hidden" name="id">
 
+                @foreach($tags as $tag)
+                    <div class="chekbox">
+                        <label>
+                            <input type="checkbox" name="tags[]" value="{{$tag->id}}" {{ $post->tags->contains($tag->id) ? 'checked' : ''}}> {{$tag->name}}
+                        </label>
+                    </div>
+                @endforeach
                 {{ csrf_field() }}
                 <input type="hidden" name="id" value="{{ $postId }}">
                 <button type="submit" class="btn btn-primary">Submit</button>
