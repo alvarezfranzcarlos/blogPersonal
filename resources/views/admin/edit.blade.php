@@ -23,7 +23,7 @@
                         class="form-control"
                         id="content"
                         name="content"
-                        value="{{ $post->content' }}"
+                        value="{{ $post->content }}"
                         >
                 </div>
 
