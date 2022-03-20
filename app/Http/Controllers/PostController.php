@@ -76,6 +76,7 @@ class PostController extends Controller
     public function getAdminDelete($id){
 
         $post = Post::find($id);
+        $post->likes()->delete();
         $post->delete();
         return redirect()->route('admin.index')->with('info', 'Post deleted');
     }
