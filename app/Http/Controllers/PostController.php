@@ -10,25 +10,21 @@ use Illuminate\Session\Store;
 
 class PostController extends Controller
 {
-    public function getIndex(Store $session){
-
-        $post= new Post();
-        $posts= $post->getPosts($session);
+    public function getIndex(){
+        $posts= Post::all();
         return view('blog.index', ['posts'=>$posts]);
     }
 
-    public function getAdminIndex(Store $session){
+    public function getAdminIndex(){
 
-        $post= new Post();
-        $posts= $post->getPosts($session);
+        $posts= Post::all();
         return view('admin.index', ['posts'=>$posts]);
     }
 
     //Cuando llega por URL post/id
-    public function getPost(Store $session, $id){
+    public function getPost($id){
 
-        $post= new Post();
-        $post= $post->getPost($session, $id);
+        $post = Post::find($id);
         return view('blog.post', ['post' => $post]);
     }
 
@@ -36,14 +32,13 @@ class PostController extends Controller
         return view('admin.create');
     }
 
-    public function getAdminEdit(Store $session, $id){
+    public function getAdminEdit($id){
 
-        $post= new Post();
-        $post= $post->getPost($session, $id);
+        $post = Post::find($id);
         return view('admin.edit', ['post'=> $post, 'postId' => $id]);
     }
 
-    public function postAdminCreate(Store $session, Request $request){
+    public function postAdminCreate(Request $request){
         $this->validate($request, [
             'title' => 'required|min:5',
             'content' => 'required|min:10'
@@ -55,10 +50,10 @@ class PostController extends Controller
             ]
         );
         $post->save();
-        return redirect()->route('admin.index')->with('info', 'Post created, Title is: ', $request->input('title'));
+        return redirect()->route('admin.index')->with('info', 'Post created, Title is: '. $request->input('title'));
     }
 
-    public function postAdminUpdate(Store $session, Request $request){
+    public function postAdminUpdate(Request $request){
         $this->validate($request, [
             'title' => 'required|min:5',
             'content' => 'required|min:10'
