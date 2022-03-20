@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Post;
+use App\Models\Like;
 use Illuminate\Http\Request;
 
 
@@ -16,15 +17,23 @@ class PostController extends Controller
 
     public function getAdminIndex(){
 
-        $posts= Post::orderBy('title','desc')->get();
+        $posts= Post::orderBy('title','asc')->get();
         return view('admin.index', ['posts'=>$posts]);
     }
 
     //Cuando llega por URL post/id
     public function getPost($id){
 
-        $post = Post::where('id','$id')->first();
+        $post = Post::where('id',$id)->first();
         return view('blog.post', ['post' => $post]);
+    }
+
+    public function getLikePost($id){
+
+        $post = Post::where('id',$id)->first();
+        $like= new Like();
+        $post->likes()->save($like);
+        return redirect()->back();
     }
 
     public function getAdminCreate(){
