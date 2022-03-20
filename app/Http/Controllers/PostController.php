@@ -58,8 +58,10 @@ class PostController extends Controller
             'title' => 'required|min:5',
             'content' => 'required|min:10'
         ]);
-        $post = new Post();
-        $post->editPost($session, $request->input('id'), $request->input('title'), $request->input('content'));
-        return redirect()->route('admin.index')->with('info', 'Post created, Title is: ', $request->input('title'));
+        $post =Post::find($request->input('id'));
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+        $post->save();
+        return redirect()->route('admin.index')->with('info', 'Post edited, Title is: '. $request->input('title'));
     }
 }
